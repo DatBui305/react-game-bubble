@@ -1,6 +1,13 @@
 import React from "react";
+import { Bubble as BubbleType } from "@/app/types/Bubble";
 
-const Bubble = ({ bubble, onClick }: { bubble: any; onClick: () => void }) => {
+const Bubble = ({
+  bubble,
+  onClick,
+}: {
+  bubble: BubbleType;
+  onClick: () => void;
+}) => {
   return (
     <div
       className="absolute flex flex-col rounded-full border border-red-400 h-12 w-12 items-center justify-center"

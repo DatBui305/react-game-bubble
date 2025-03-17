@@ -32,7 +32,7 @@ const GameBoard = () => {
 
       return () => clearInterval(interval);
     }
-  }, [isAutoPlaying, nextValue]);
+  }, [isAutoPlaying, nextValue, isPlaying]);
 
   useEffect(() => {
     if (isPlaying) {
