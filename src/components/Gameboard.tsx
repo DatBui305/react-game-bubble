@@ -8,7 +8,7 @@ const GameBoard = () => {
   const [nextValue, setNextValue] = useState(1);
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
   const [isAllCleared, setIsAllCleared] = useState(false);
-  const [headerValue, setHeaderValue] = useState("LET PLAYS");
+  const [headerValue, setHeaderValue] = useState("LET'S PLAY");
   const [isGameOver, setIsGameOver] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
 
@@ -70,7 +70,7 @@ const GameBoard = () => {
     const newBubbles = createBubbles(point);
     setBubbles(newBubbles.sort((a, b) => a.number - b.number));
     setIsPlaying(true);
-    setHeaderValue("LET PLAYS");
+    setHeaderValue("LET'S PLAY");
   };
 
   const handleRestart = () => {
@@ -103,8 +103,12 @@ const GameBoard = () => {
     }
   }, [bubbles]);
   return (
-    <div className="grid grid-cols-4">
-      <div className="col-span-2 col-start-2 p-10 border">
+    <div className="grid grid-cols-4 h-screen">
+      <div
+        className="col-span-4 p-10 border shadow-md
+                    lg:col-span-2 lg:col-start-2
+      "
+      >
         <h1
           className="font-bold"
           style={{
@@ -119,11 +123,11 @@ const GameBoard = () => {
           {headerValue}
         </h1>
 
-        <div className="grid grid-cols-3 pt-5 pb-5">
-          <h2 className="col-span-1">Point: </h2>
+        <div className="grid grid-cols-3 pt-5 pb-5 ">
+          <h2 className="col-span-1 ">Point: </h2>
           <input
             type="text"
-            className="col-span-1 border"
+            className="col-span-1 border shadow-md px-5"
             placeholder="1"
             value={point}
             onChange={(e) => setPoint(Number(e.target.value))}
@@ -131,33 +135,42 @@ const GameBoard = () => {
         </div>
         <div className="grid grid-cols-3 pb-5">
           <h2 className="col-span-1">Time: </h2>
-          <h2 className="col-span-1">{time.toFixed(1)}s</h2>
+          <h2 className="col-span-1 shadow-md px-5">{time.toFixed(1)}s</h2>
         </div>
 
         {isPlaying ? (
           <div className="grid grid-cols-3 pb-5 gap-4">
-            <button className="col-span-1 border" onClick={handleRestart}>
+            <button
+              className="col-span-1 border shadow-md"
+              onClick={handleRestart}
+            >
               Restart
             </button>
-            <button className="col-span-1 border" onClick={handleAutoPlay}>
+            <button
+              className="col-span-1 border shadow-md"
+              onClick={handleAutoPlay}
+            >
               {isAutoPlaying ? "Auto Play Off" : "Auto Play On"}
             </button>
           </div>
         ) : (
           <div className="grid grid-cols-3 pb-5 gap-4">
-            <button className="col-span-1 border" onClick={handlePlay}>
+            <button
+              className="col-span-1 border shadow-md"
+              onClick={handlePlay}
+            >
               Play
             </button>
           </div>
         )}
 
-        <div className="relative border h-96 w-full bg-gray-200">
+        <div className="relative border h-9/12 w-full bg-gray-200 shadow-md">
           {[...bubbles]
             .sort((a, b) => a.number - b.number)
             .map((bubble) => (
               <div
                 key={bubble.id}
-                className="absolute flex flex-col rounded-full border border-red-400 h-12 w-12 items-center justify-center"
+                className="absolute flex flex-col rounded-full border border-red-400 h-12 w-12 items-center justify-center shadow-md"
                 style={{
                   top: bubble.y,
                   left: bubble.x,
