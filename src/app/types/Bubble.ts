@@ -1,4 +1,4 @@
-type Bubble = {
+export type Bubble = {
   id: number;
   number: number;
   x: string;

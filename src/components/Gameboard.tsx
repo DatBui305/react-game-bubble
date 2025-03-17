@@ -1,5 +1,6 @@
 "use client";
 import { createBubbles } from "@/app/services/gameService";
+import { Bubble } from "@/app/types/Bubble";
 import { useEffect, useState } from "react";
 const GameBoard = () => {
   const [point, setPoint] = useState(5);
@@ -7,7 +8,6 @@ const GameBoard = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [nextValue, setNextValue] = useState(1);
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
-  const [isAllCleared, setIsAllCleared] = useState(false);
   const [headerValue, setHeaderValue] = useState("LET'S PLAY");
   const [isGameOver, setIsGameOver] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
@@ -64,9 +64,17 @@ const GameBoard = () => {
 
     return () => clearInterval(interval);
   }, [isGameOver]);
-  const handlePlay = () => {
+  const handleRestartAllStart = () => {
     setTime(0);
     setNextValue(1);
+    setIsPlaying(true);
+    setIsGameOver(false);
+    setHeaderValue("LET'S PLAY");
+    setIsAutoPlaying(false);
+  };
+
+  const handlePlay = () => {
+    handleRestartAllStart();
     const newBubbles = createBubbles(point);
     setBubbles(newBubbles.sort((a, b) => a.number - b.number));
     setIsPlaying(true);
@@ -74,6 +82,7 @@ const GameBoard = () => {
   };
 
   const handleRestart = () => {
+    handleRestartAllStart();
     const newBubbles = createBubbles(point);
     setBubbles(newBubbles.sort((a, b) => a.number - b.number));
     setIsPlaying(true);
@@ -81,7 +90,11 @@ const GameBoard = () => {
     setNextValue(1);
   };
   const handleAutoPlay = () => {
+    setIsPlaying(true);
+    setIsGameOver(false);
+    setHeaderValue("LET'S PLAY");
     setIsAutoPlaying((prev) => !prev);
+    setIsPlaying(true);
   };
   const handleBubbleClick = (id: number, number: number) => {
     if (number === nextValue) {
@@ -98,7 +111,6 @@ const GameBoard = () => {
   useEffect(() => {
     if (bubbles.length === 0 && isPlaying) {
       setIsPlaying(false);
-      setIsAllCleared(true);
       setHeaderValue("ALL CLEARED");
     }
   }, [bubbles]);
