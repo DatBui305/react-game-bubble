@@ -18,7 +18,7 @@ const GameBoard = () => {
         setBubbles((prevBubbles) => {
           const nextBubble = prevBubbles.find((b) => b.number === nextValue);
           if (nextBubble) {
-            setNextValue(nextValue + 1); // Tính trước rồi set
+            setNextValue(nextValue + 1);
             return prevBubbles.map((b) =>
               b.id === nextBubble.id ? { ...b, isClick: true } : b
             );
@@ -99,7 +99,7 @@ const GameBoard = () => {
     if (bubbles.length === 0 && isPlaying) {
       setIsPlaying(false);
       setIsAllCleared(true);
-      setHeaderValue("All Cleared");
+      setHeaderValue("ALL CLEARED");
     }
   }, [bubbles]);
   return (
@@ -176,7 +176,7 @@ const GameBoard = () => {
                   left: bubble.x,
                   backgroundColor: bubble.isClick
                     ? `rgba(255, 0, 0, ${bubble.opacity})`
-                    : "white", // Màu ban đầu
+                    : "white",
                   zIndex: point - bubble.number,
                   transition: "opacity 0.1s linear",
                 }}
